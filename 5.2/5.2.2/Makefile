@@ -10,6 +10,8 @@ MAKEFLAGS+=--no-builtin-rules
 
 IMAGE_NAME=plone/plone-zeo
 IMAGE_TAG=5.2.2
+IMAGE_VARIATIONS=python39
+IMAGE_DEFAULT_VARIATION=python39
 IMAGE_ADDITIONAL_TAGS=5.2 latest
 
 # We like colors
@@ -28,15 +30,27 @@ all: build
 help: ## This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: build-image
-build-image:  ## Build Docker Image
-	@docker build . -t $(IMAGE_NAME):$(IMAGE_TAG) -f Dockerfile
+.PHONY: build-images
+build-images:  ## Build Docker Images
+	@echo "Building $(IMAGE_NAME):$(IMAGE_TAG)"
+	$(foreach VARIATION,$(IMAGE_VARIATIONS),docker build . -t $(IMAGE_NAME):$(IMAGE_TAG)-${VARIATION} -f Dockerfile.${VARIATION};)
+
+.PHONY: push-images
+tag-images:  ## Tag images
+	@echo "Tag $(IMAGE_NAME):$(IMAGE_TAG)-${IMAGE_DEFAULT_VARIATION} as $(IMAGE_NAME):$(IMAGE_TAG)"
+	@docker tag $(IMAGE_NAME):$(IMAGE_TAG)-${IMAGE_DEFAULT_VARIATION} $(IMAGE_NAME):$(IMAGE_TAG)
+	@echo "Tag $(IMAGE_NAME):$(IMAGE_TAG) with additional tags, if any"
 	$(foreach TAG,$(IMAGE_ADDITIONAL_TAGS),docker tag $(IMAGE_NAME):$(IMAGE_TAG) $(IMAGE_NAME):$(TAG);)
 
-.PHONY: push-image
-push-image:  ## Push docker image to dockerhub
+.PHONY: push-images
+push-images:  ## Push docker image to dockerhub
+	@echo "Push $(IMAGE_NAME):$(IMAGE_TAG) to Docker Hub"
 	@docker push $(IMAGE_NAME):$(IMAGE_TAG)
+	@echo "Push $(IMAGE_NAME):$(IMAGE_TAG) additional tags to Docker Hub"
+	$(foreach TAG,$(IMAGE_ADDITIONAL_TAGS),docker push $(IMAGE_NAME):$(TAG);)
+	@echo "Push all $(IMAGE_NAME):$(IMAGE_TAG) variations to Docker Hub"
+	$(foreach VARIATION,$(IMAGE_VARIATIONS),docker push $(IMAGE_NAME):$(IMAGE_TAG)-${VARIATION};)
 
 .PHONY: release
-release: build-image push-image ## Build and push the image to docker hub
+release: build-images push-images ## Build and push the image to docker hub
 	@echo "Releasing $(IMAGE_NAME):$(IMAGE_TAG)"

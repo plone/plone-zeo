@@ -10,4 +10,5 @@ mkdir -p /data/filestorage /data/blobstorage /data/cache /data/log
 [ -z ${ZEO_PACK_KEEP_OLD+x} ] && export ZEO_PACK_KEEP_OLD=true
 [ -z ${ZEO_PORT+x} ] && export ZEO_PORT=8100
 
+echo "Starting ZEO on port ${ZEO_PORT}"
 /app/bin/runzeo -C etc/zeo.conf

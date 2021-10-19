@@ -6,7 +6,7 @@ A ZEO Server [Docker](https://docker.com) image using Python 3 and [pip](https:/
 
 ## Supported tags and respective Dockerfile links
 
-- `5.2.2, 5.2, latest` [(5.2/5.2.2/Dockerfile)](https://github.com/plone/plone-zeo/blob/main/5.2/5.2.2/Dockerfile)
+- `5.2.2, 5.2.2--python39, 5.2, latest` [(5.2/5.2.2/Dockerfile)](https://github.com/plone/plone-zeo/blob/main/5.2/5.2.2/Dockerfile.python39)
 
 ## Using this image
 
