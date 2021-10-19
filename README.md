@@ -28,7 +28,7 @@ services:
     image: plone/plone-backend:latest
     restart: always
     environment:
-      USE_ZEO: 1    
+      ZEO_ADDRESS: zeo:8100
     ports:
     - "8080:8080"
     depends_on:
@@ -61,49 +61,17 @@ We encourage users of the `Plone` images to familiarize themselves with the opti
 
 ## Configuration
 
-The default image ships with a reasonable default configuration:
+### Main variables
 
-```
-%define INSTANCE /app
+| Environment variable                      | ZEO  option                    | Default value                   |
+| ----------------------------------------- | ------------------------------ | ------------------------------- |
+| ZEO_PORT                                  | address                        | 8100                            |
+| ZEO_READ_ONLY                             | read-only                      | false                           |
+| ZEO_INVALIDATION_QUEUE_SIZE               | invalidation-queue-size        | 100                             |
+| ZEO_PACK_KEEP_OLD                         | pack-keep-old                  | true                            |
 
-<zeo>
-  address 0.0.0.0:8100
-  read-only false
-  invalidation-queue-size 100
-  pid-filename $INSTANCE/var/zeo.pid
-</zeo>
 
-<filestorage 1>
-  path $INSTANCE/var/filestorage/Data.fs
-  blob-dir $INSTANCE/var/blobstorage
-  pack-keep-old false
-</filestorage>
-
-<eventlog>
-  level info
-  <logfile>
-      path $INSTANCE/var/log/zeo.log
-      format %(asctime)s %(message)s
-    </logfile>
-</eventlog>
-
-<runner>
-  program $INSTANCE/bin/runzeo
-  socket-name $INSTANCE/var/zeo.zdsock
-  daemon true
-  forever false
-  backoff-limit 10
-  exit-codes 0, 2
-  directory $INSTANCE
-  default-to-interactive true
-
-  # This logfile should match the one in the zeo.conf file.
-  # It is used by zdctl's logtail command, zdrun/zdctl doesn't write it.
-  logfile $INSTANCE/var/log/zeo.log
-</runner>
-```
-
-In case you need to modify it, we suggest you to create a new image based on the default one:
+In case you need to configure an option not present in the environment variables, we suggest you to create a new image based on the default one:
 
 ```Dockerfile
 FROM plone/plone-zeo:latest
