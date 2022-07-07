@@ -9,10 +9,10 @@ MAKEFLAGS+=--warn-undefined-variables
 MAKEFLAGS+=--no-builtin-rules
 
 IMAGE_NAME=plone/plone-zeo
-IMAGE_TAG=5.2.2
+IMAGE_TAG=5.3.0
 IMAGE_VARIATIONS=python39
 IMAGE_DEFAULT_VARIATION=python39
-IMAGE_ADDITIONAL_TAGS=5.2
+IMAGE_ADDITIONAL_TAGS=5.3 latest
 
 # We like colors
 # From: https://coderwall.com/p/izxssa/colored-makefile-for-golang-projects
