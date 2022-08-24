@@ -1,4 +1,22 @@
-# plone-zeo
+<p align="center">
+  <a href="https://github.com/marketplace/actions/docker-stack-deploy-action">
+    <img alt="Plone Logo" width="200px" src="https://raw.githubusercontent.com/plone/plone/main/docs/logo.png">
+  </a>
+</p>
+
+<h1 align="center">
+  plone/plone-zeo
+</h1>
+
+<div align="center">
+
+[![Docker Image Version (latest semver)](https://img.shields.io/docker/v/plone/plone-zeo?sort=semver)](https://hub.docker.com/r/plone/plone-zeo)
+[![Docker Image Size (latest semver)](https://img.shields.io/docker/image-size/plone/plone-zeo?sort=semver)](https://hub.docker.com/r/plone/plone-zeo)
+
+![GitHub Repo stars](https://img.shields.io/github/stars/plone/plone-zeo?style=flat-square)
+[![license badge](https://img.shields.io/github/license/plone/plone-zeo)](./LICENSE)
+
+</div>
 
 A ZEO Server [Docker](https://docker.com) image using Python 3 and [pip](https://pip.pypa.io/en/stable/).
 
