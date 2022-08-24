@@ -58,7 +58,7 @@ And then build the new image and start the container.
 
 - [Issue Tracker](https://github.com/plone/plone-zeo/issues)
 - [Source Code](https://github.com/plone/plone-zeo/)
-- [Documentation](https://github.com/plone/plone-zeo/tree/main/docs)
+- [Documentation](https://6.dev-docs.plone.org/install/containers/images/zeo.html)
 
 Please **DO NOT** commit to main directly. Even for the smallest and most trivial fix.
 **ALWAYS** open a pull request and ask somebody else to merge your code. **NEVER** merge it yourself.
