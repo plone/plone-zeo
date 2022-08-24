@@ -6,49 +6,22 @@ A ZEO Server [Docker](https://docker.com) image using Python 3 and [pip](https:/
 
 ## Supported tags and respective Dockerfile links
 
-- `5.2.2, 5.2.2--python39, 5.2, latest` [(5.2/5.2.2/Dockerfile)](https://github.com/plone/plone-zeo/blob/main/5.2/5.2.2/Dockerfile.python39)
+### Latest
 
-## Using this image
+- `5, 5.3, 5.3.0,latest` [(5.3.0/Dockerfile)](https://github.com/plone/plone-zeo/blob/v5.3.0/Dockerfile)
 
-### Simple usage
+### Nightly build
 
-```shell
-docker run -p 8100:8100 plone/plone-zeo:latest
-```
+- `nightly` [(Dockerfile.nightly)](https://github.com/plone/plone-zeo/blob/main/Dockerfile.nightly)
 
-### Docker-compose
 
-Create a directory for your project, and inside it create a `docker-compose.yml` file that starts your Plone instance and the ZEO instance with volume mounts for data persistence:
+### Previous
 
-```yaml
-version: "3"
-services:
+- `5.2, 5.2.2, 5.2.2--python39` [(5.2.2/Dockerfile)](https://github.com/plone/plone-zeo/blob/v5.2.2/5.2/5.2.2/Dockerfile.python39)
 
-  backend:
-    image: plone/plone-backend:latest
-    restart: always
-    environment:
-      ZEO_ADDRESS: zeo:8100
-    ports:
-    - "8080:8080"
-    depends_on:
-      - zeo
+## Usage
 
-  zeo:
-    image: plone/plone-zeo:latest
-    restart: always
-    volumes:
-      - data:/data
-    ports:
-    - "8100:8100"
-
-volumes:
-  data: {}
-```
-
-Now, run `docker-compose up -d` from your project directory.
-
-Point your browser at http://localhost:8080 and you should see the default Plone site creation page.
+Please refer to the [Official Plone Documentation](https://6.dev-docs.plone.org/install/containers/images/zeo.html) for further documentation and examples.
 
 
 ### Persistent data
@@ -90,6 +63,11 @@ And then build the new image and start the container.
 Please **DO NOT** commit to main directly. Even for the smallest and most trivial fix.
 **ALWAYS** open a pull request and ask somebody else to merge your code. **NEVER** merge it yourself.
 
+## Credits
+
+This project is supported by:
+
+[![Plone Foundation](https://raw.githubusercontent.com/plone/.github/main/plone-foundation.png)](https://plone.org/)
 
 ## License
 
