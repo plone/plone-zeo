@@ -1,7 +1,5 @@
 <p align="center">
-  <a href="https://github.com/marketplace/actions/docker-stack-deploy-action">
     <img alt="Plone Logo" width="200px" src="https://raw.githubusercontent.com/plone/plone/main/docs/logo.png">
-  </a>
 </p>
 
 <h1 align="center">
