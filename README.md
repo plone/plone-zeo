@@ -18,13 +18,13 @@
 
 A ZEO Server [Docker](https://docker.com) image using Python 3 and [pip](https://pip.pypa.io/en/stable/).
 
-> **NOTE**: These images are not yet officially supported by the Plone Community.
 
 ## Supported tags and respective Dockerfile links
 
 ### Latest
 
-- `5, 5.3, 5.3.0,latest` [(5.3.0/Dockerfile)](https://github.com/plone/plone-zeo/blob/v5.3.0/Dockerfile)
+- `5, 5.4, 5.4.0,latest` [(5.4.0/Dockerfile)](https://github.com/plone/plone-zeo/blob/v5.4.0/Dockerfile)
+
 
 ### Nightly build
 
@@ -33,11 +33,13 @@ A ZEO Server [Docker](https://docker.com) image using Python 3 and [pip](https:/
 
 ### Previous
 
+- `5.3, 5.3.0` [(5.3.0/Dockerfile)](https://github.com/plone/plone-zeo/blob/v5.3.0/Dockerfile)
+
 - `5.2, 5.2.2, 5.2.2--python39` [(5.2.2/Dockerfile)](https://github.com/plone/plone-zeo/blob/v5.2.2/5.2/5.2.2/Dockerfile.python39)
 
 ## Usage
 
-Please refer to the [Official Plone Documentation](https://6.dev-docs.plone.org/install/containers/images/zeo.html) for further documentation and examples.
+Please refer to the [Official Plone Documentation](https://6.docs.plone.org/install/containers/images/zeo.html) for further documentation and examples.
 
 
 ### Persistent data
