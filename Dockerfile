@@ -1,17 +1,31 @@
-FROM python:3.11-slim-buster AS base
+# syntax=docker/dockerfile:1
+ARG PYTHON_VERSION=3.11
+FROM python:${PYTHON_VERSION}-slim-bullseye AS base
 FROM base AS builder
 
-ENV ZEO_VERSION=5.4.1
+ENV ZEO_VERSION=6.0.0
 
-RUN mkdir /wheelhouse
+RUN <<EOT
+    set -e
+    apt-get update
+    apt-get -y upgrade
+    buildDeps="build-essential"
+    apt-get install -y --no-install-recommends $buildDeps
+    python -m venv /app
+EOT
 
-RUN apt-get update \
-    && buildDeps="build-essential" \
-    && apt-get install -y --no-install-recommends $buildDeps\
-    && rm -rf /var/lib/apt/lists/* /usr/share/doc\
-    && pip install -U "pip"
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
-RUN pip wheel "zeo==${ZEO_VERSION}" --wheel-dir=/wheelhouse
+ENV UV_LINK_MODE=copy
+ENV UV_COMPILE_BYTECODE=1
+ENV UV_PYTHON_DOWNLOADS=never
+ENV UV_PYTHON=python${PYTHON_VERSION}
+ENV UV_PROJECT_ENVIRONMENT=/app
+
+RUN --mount=type=cache,target=/root/.cache <<EOT
+    set -e
+    uv pip install --python=$UV_PROJECT_ENVIRONMENT "zeo==${ZEO_VERSION}"
+EOT
 
 FROM base
 
@@ -20,14 +34,14 @@ LABEL maintainer="Plone Community <dev@plone.org>" \
       org.label-schema.description="ZEO (ZODB) Server." \
       org.label-schema.vendor="Plone Foundation"
 
-COPY --from=builder /wheelhouse /wheelhouse
+COPY --from=builder /app /app
 
-RUN useradd --system -m -d /app -U -u 500 plone \
-    && python -m venv /app \
-    && /app/bin/pip install --force-reinstall --no-index --no-deps /wheelhouse/* \
-    && find . \( -type f -a -name '*.pyc' -o -name '*.pyo' \) -exec rm -rf '{}' + \
-    && mkdir -p /data /app/var \
-    && chown -R plone:plone /app /data
+RUN <<EOT
+    set -e
+    useradd --system -m -d /app -U -u 500 plone
+    mkdir -p /data /app/var
+    chown -R plone:plone /app /data
+EOT
 
 WORKDIR /app
 USER plone
