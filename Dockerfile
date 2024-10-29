@@ -1,7 +1,7 @@
-FROM python:3.11-slim-buster as base
-FROM base as builder
+FROM python:3.11-slim-buster AS base
+FROM base AS builder
 
-ENV ZEO_VERSION=5.4.0
+ENV ZEO_VERSION=5.4.1
 
 RUN mkdir /wheelhouse
 
